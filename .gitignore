@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+
+# Large data files — download separately from Alibaba
+data/alibaba/batch_instance.csv
+data/alibaba/container_usage.csv
+data/alibaba/server_usage.csv
+
+# Raw task dump (161 MB)
+results/raw_tasks.csv
+
+# Backup files
+*.bak
+
+# LibreOffice lock files
+results/.~lock.*
+
+# Virtual environments
+venv/
+env/

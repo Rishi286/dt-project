@@ -1,0 +1,134 @@
+======================================================================
+DESCRIPTIVE STATISTICS
+======================================================================
+
+Average Response Time (s)
+               Mean       Std       Min       Max   N
+allocator                                            
+dt         8.907194  0.100316  8.762041  9.094478  15
+greedy     9.241719  0.049704  9.176729  9.345110  15
+threshold  9.030152  0.078498  8.889265  9.170505  15
+
+Task Completion Rate
+               Mean       Std       Min       Max   N
+allocator                                            
+dt         0.893025  0.053090  0.834198  0.962027  15
+greedy     0.898540  0.051129  0.838593  0.962637  15
+threshold  0.900330  0.051884  0.840796  0.966373  15
+
+SLA Violation Rate
+               Mean       Std       Min       Max   N
+allocator                                            
+dt         0.017212  0.002195  0.013943  0.020703  15
+greedy     0.002018  0.002072  0.000000  0.005016  15
+threshold  0.002257  0.002546  0.000115  0.006788  15
+
+======================================================================
+SHAPIRO-WILK NORMALITY TEST (p < 0.05 -> non-normal)
+======================================================================
+
+avg_response_time
+  dt            W=0.9631  p=0.7457  normal
+  threshold     W=0.9754  p=0.9286  normal
+  greedy        W=0.9530  p=0.5729  normal
+
+completion_rate
+  dt            W=0.8097  p=0.0049  NON-NORMAL
+  threshold     W=0.8171  p=0.0061  NON-NORMAL
+  greedy        W=0.8204  p=0.0068  NON-NORMAL
+
+sla_violation_rate
+  dt            W=0.9415  p=0.4017  normal
+  threshold     W=0.7692  p=0.0015  NON-NORMAL
+  greedy        W=0.7895  p=0.0027  NON-NORMAL
+
+======================================================================
+KRUSKAL-WALLIS TEST (omnibus, across all 3 allocators)
+======================================================================
+
+Average Response Time (s)
+  H=33.2993  p=0.000000  SIGNIFICANT
+
+Task Completion Rate
+  H=3.2858  p=0.193419  not significant
+
+SLA Violation Rate
+  H=29.4037  p=0.000000  SIGNIFICANT
+
+======================================================================
+PAIRWISE MANN-WHITNEY U  (Holm-Bonferroni corrected)
+======================================================================
+
+Average Response Time (s)
+  dt vs threshold     U=41.0  p_raw=0.0032  p_adj=0.0032  **
+  dt vs greedy        U=0.0  p_raw=0.0000  p_adj=0.0000  **
+  threshold vs greedy        U=0.0  p_raw=0.0000  p_adj=0.0000  **
+
+Task Completion Rate
+  dt vs threshold     U=75.0  p_raw=0.1249  p_adj=0.3746  ns
+  dt vs greedy        U=80.0  p_raw=0.1844  p_adj=0.3688  ns
+  threshold vs greedy        U=134.0  p_raw=0.3837  p_adj=0.3837  ns
+
+SLA Violation Rate
+  dt vs threshold     U=225.0  p_raw=0.0000  p_adj=0.0000  **
+  dt vs greedy        U=225.0  p_raw=0.0000  p_adj=0.0000  **
+  threshold vs greedy        U=121.0  p_raw=0.7400  p_adj=0.7400  ns
+
+======================================================================
+EFFECT SIZES (Cohen's d)  |d|: small=0.2, medium=0.5, large=0.8
+======================================================================
+
+Average Response Time (s)
+  dt vs threshold     d=-1.3651  (large)
+  dt vs greedy        d=-4.2257  (large)
+  threshold vs greedy        d=-3.2203  (large)
+
+Task Completion Rate
+  dt vs threshold     d=-0.1392  (negligible)
+  dt vs greedy        d=-0.1058  (negligible)
+  threshold vs greedy        d=+0.0348  (negligible)
+
+SLA Violation Rate
+  dt vs threshold     d=+6.2902  (large)
+  dt vs greedy        d=+7.1179  (large)
+  threshold vs greedy        d=+0.1031  (negligible)
+
+======================================================================
+95% CONFIDENCE INTERVALS (bootstrap, n=10000)
+======================================================================
+
+Average Response Time (s)
+  dt            mean=8.907194  95% CI [8.859301, 8.957116]
+  threshold     mean=9.030152  95% CI [8.991200, 9.068698]
+  greedy        mean=9.241719  95% CI [9.218094, 9.266663]
+
+Task Completion Rate
+  dt            mean=0.893025  95% CI [0.867967, 0.919483]
+  threshold     mean=0.900330  95% CI [0.875482, 0.925898]
+  greedy        mean=0.898540  95% CI [0.873974, 0.923598]
+
+SLA Violation Rate
+  dt            mean=0.017212  95% CI [0.016170, 0.018268]
+  threshold     mean=0.002257  95% CI [0.001064, 0.003496]
+  greedy        mean=0.002018  95% CI [0.001054, 0.003059]
+
+Saved: C:\dt-project\results\figures\avg_response_time.png
+
+Saved: C:\dt-project\results\figures\completion_rate.png
+
+Saved: C:\dt-project\results\figures\sla_violation_rate.png
+
+======================================================================
+PER-REGIME MEAN RESULTS
+======================================================================
+                   avg_response_time  completion_rate  sla_violation_rate
+allocator regime                                                         
+dt        bursty              9.0187           0.8351              0.0196
+          diurnal             8.8253           0.8842              0.0163
+          steady              8.8775           0.9598              0.0158
+greedy    bursty              9.2314           0.8406              0.0048
+          diurnal             9.2819           0.8937              0.0012
+          steady              9.2119           0.9613              0.0001
+threshold bursty              9.1067           0.8425              0.0056
+          diurnal             8.9584           0.8939              0.0010
+          steady              9.0254           0.9647              0.0001
