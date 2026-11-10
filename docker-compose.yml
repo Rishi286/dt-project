@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  dt-simulation:
+    build: .
+    container_name: dt_experiment
+    volumes:
+      # Mount local results folder so CSV output is saved to your machine
+      - ./results:/app/results
+      # Mount Alibaba trace data if present
+      - ./data:/app/data
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: python run_experiments_adaptive.py

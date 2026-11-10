@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: dt-simulation-job
+spec:
+  template:
+    spec:
+      containers:
+        - name: dt-simulation
+          image: dt-project-dt-simulation:latest
+          imagePullPolicy: Never
+          command: ["python", "run_experiments_adaptive.py"]
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "500m"
+            limits:
+              memory: "512Mi"
+              cpu: "1000m"
+      restartPolicy: Never
+  backoffLimit: 1
