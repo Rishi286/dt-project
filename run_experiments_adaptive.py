@@ -7,16 +7,16 @@ sys.path.insert(0, ".")
 
 from dt_controller.dt_controller import DigitalTwinController, Task
 from dt_controller.adaptive_dt_controller import AdaptiveDTController
-from baselines.baselines import ThresholdAllocator, GreedyBestFitAllocator
+from baselines.baselines import ThresholdAllocator, GreedyBestFitAllocator, EWMAAllocator
 from alibaba_loader import load_alibaba_tasks
 
-SEEDS        = [42, 7, 13, 99, 2025]
+SEEDS        = [42, 7, 13]
 REGIMES      = ["steady", "diurnal", "bursty"]
-ALLOCATORS   = ["DT", "AdaptiveDT", "Threshold", "Greedy"]
-SIM_DURATION = 3600.0
+ALLOCATORS   = ["DT", "AdaptiveDT", "Threshold", "Greedy", "EWMA"]
+SIM_DURATION = 600.0
 CLOUD_CORES  = 100
 EDGE_CORES   = 20
-N_TASKS      = 5000
+N_TASKS      = 1000
 
 TRACE_PATH   = "data/alibaba/batch_task.csv"
 
@@ -40,6 +40,12 @@ def run_simulation(alloc_name, regime, seed):
         alloc = ThresholdAllocator(
             cloud_cpu=CLOUD_CORES, cloud_mem=CLOUD_CORES * 4,
             edge_cpu=EDGE_CORES,   edge_mem=EDGE_CORES  * 4,
+        )
+    elif alloc_name == "EWMA":
+        alloc = EWMAAllocator(
+            cloud_cpu=CLOUD_CORES, cloud_mem=CLOUD_CORES * 4,
+            edge_cpu=EDGE_CORES,   edge_mem=EDGE_CORES  * 4,
+            alpha=0.3, high_water=0.80,
         )
     else:
         alloc = GreedyBestFitAllocator(
@@ -98,7 +104,7 @@ def run_simulation(alloc_name, regime, seed):
                     yield env.timeout(gap)
 
     env.process(arrival_loop())
-    env.run(until=SIM_DURATION + 300)
+    env.run(until=SIM_DURATION + 60)
 
     n_comp   = len(completed)
     n_viol   = sum(1 for c in completed if c["violated"])

@@ -6,7 +6,7 @@ Makes allocation decisions based on current state snapshot.
 
 import numpy as np
 from dataclasses import dataclass, field
-from typing import Literal
+from typing import Optional
 
 
 @dataclass
@@ -94,7 +94,7 @@ class DigitalTwinController:
     # Allocation decision
     # ------------------------------------------------------------------
 
-    def allocate(self, task: Task, current_time: float) -> Literal["cloud", "edge", "reject"]:
+    def allocate(self, task: Task, current_time: float) -> str:
         """Return 'cloud', 'edge', or 'reject' if neither tier can fit the task."""
 
         cloud_fits = (self.cloud.cpu_used + task.cpu_req <= self.cloud.cpu_capacity and
